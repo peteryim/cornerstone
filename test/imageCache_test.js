@@ -255,7 +255,7 @@ describe('Store, retrieve, and remove imagePromises from the cache', function ()
     getImageLoadObject('imageId-6');
 
     // Setup event listeners to check that the promise removed and cache full events have fired properly
-    $(events).one('CornerstoneImageCachePromiseRemoved', (event, imageId) => {
+    events.addEventListener('cornerstoneimagecachepromiseremoved', (event, imageId) => {
       // Detect that the earliest image added has been removed
 
       // TODO: Figure out how to change the test setup to ensure the same
@@ -267,7 +267,7 @@ describe('Store, retrieve, and remove imagePromises from the cache', function ()
       done();
     });
 
-    $(events).one('CornerstoneImageCacheFull', (event, cacheInfo) => {
+    events.addEventListener('cornerstoneimagecachefull', (event, cacheInfo) => {
       const currentInfo = getCacheInfo();
 
       assert.equal(cacheInfo, currentInfo);

@@ -23,7 +23,7 @@ export function setMaximumSizeBytes (numBytes) {
 
   maximumSizeInBytes = numBytes;
 
-  triggerEvent(events, 'CornerstoneImageCacheMaximumSizeChanged');
+  triggerEvent(events, 'cornerstoneimagecachemaximumsizechanged');
 
   purgeCacheIfNecessary();
 }
@@ -55,12 +55,12 @@ function purgeCacheIfNecessary () {
 
     removeImageLoadObject(imageId);
 
-    triggerEvent(events, 'CornerstoneImageCachePromiseRemoved', { imageId });
+    triggerEvent(events, 'cornerstoneimagecachepromiseremoved', { imageId });
   }
 
   const cacheInfo = getCacheInfo();
 
-  triggerEvent(events, 'CornerstoneImageCacheFull', cacheInfo);
+  triggerEvent(events, 'cornerstoneimagecachefull', cacheInfo);
 }
 
 export function putImageLoadObject (imageId, imageLoadObject) {
@@ -113,7 +113,7 @@ export function putImageLoadObject (imageId, imageLoadObject) {
       image: cachedImage
     };
 
-    triggerEvent(events, 'CornerstoneImageCacheChanged', eventDetails);
+    triggerEvent(events, 'cornerstoneimagecachechanged', eventDetails);
 
     cachedImage.sharedCacheKey = image.sharedCacheKey;
 
@@ -160,7 +160,7 @@ export function removeImageLoadObject (imageId) {
     image: cachedImage
   };
 
-  triggerEvent(events, 'CornerstoneImageCacheChanged', eventDetails);
+  triggerEvent(events, 'cornerstoneimagecachechanged', eventDetails);
   decache(cachedImage.imageLoadObject.promise);
 
   delete imageCacheDict[imageId];
@@ -208,7 +208,7 @@ export function changeImageIdCacheSize (imageId, newCacheSize) {
         image
       };
 
-      triggerEvent(events, 'CornerstoneImageCacheChanged', eventDetails);
+      triggerEvent(events, 'cornerstoneimagecachechanged', eventDetails);
     });
   }
 }

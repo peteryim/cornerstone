@@ -39,14 +39,14 @@ function loadImageFromImageLoader (imageId, options) {
 
   // Broadcast an image loaded event once the image is loaded
   imageLoadObject.promise.then(function (image) {
-    triggerEvent(events, 'CornerstoneImageLoaded', { image });
+    triggerEvent(events, 'cornerstoneimageloaded', { image });
   }, function (error) {
     const errorObject = {
       imageId,
       error
     };
 
-    triggerEvent(events, 'CornerstoneImageLoadFailed', errorObject);
+    triggerEvent(events, 'cornerstoneimageloadfailed', errorObject);
   });
 
   return imageLoadObject;
