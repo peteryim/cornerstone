@@ -224,9 +224,10 @@ describe('Store, retrieve, and remove imagePromises from the cache', function ()
 
   it('should be able to kick the oldest image out of the cache', function (done) {
     // Arrange
-    setMaximumSizeBytes(1000);
-
+    const maxCacheSize = 1000;
     const promises = [];
+
+    setMaximumSizeBytes(maxCacheSize);
 
     for (let i = 0; i < 10; i++) {
       // Create the image
@@ -255,7 +256,9 @@ describe('Store, retrieve, and remove imagePromises from the cache', function ()
     getImageLoadObject('imageId-6');
 
     // Setup event listeners to check that the promise removed and cache full events have fired properly
-    events.addEventListener('cornerstoneimagecachepromiseremoved', (event, imageId) => {
+    events.addEventListener('cornerstoneimagecachepromiseremoved', (event) => {
+      const imageId = event.detail.imageId;
+
       // Detect that the earliest image added has been removed
 
       // TODO: Figure out how to change the test setup to ensure the same
@@ -267,11 +270,9 @@ describe('Store, retrieve, and remove imagePromises from the cache', function ()
       done();
     });
 
-    events.addEventListener('cornerstoneimagecachefull', (event, cacheInfo) => {
-      const currentInfo = getCacheInfo();
-
-      assert.equal(cacheInfo, currentInfo);
-      console.log('CornerstoneImageCacheFull');
+    events.addEventListener('cornerstoneimagecachefull', (event) => {
+      assert.equal(event.detail.numberOfImagesCached, 10);
+      assert.equal(event.detail.cacheSizeInBytes, maxCacheSize);
       done();
     });
 
